@@ -27,7 +27,7 @@ export function makeMarkup(data) {
       .firstElementChild.getBoundingClientRect();
 
     window.scrollBy({
-      top: cardHeight * 3,
+      top: cardHeight * 2,
       behavior: 'smooth',
     });
   }
