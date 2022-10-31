@@ -1,6 +1,6 @@
 import getDataFromPixabay from './js/axiosPixabay';
 import Refs from './js/refs';
-import { makeMarkup, clearMarkup } from './js/markup';
+import { createMarkup, clearMarkup } from './js/markup';
 import 'simplelightbox/dist/simple-lightbox.min.css';
 
 const refs = new Refs();
@@ -23,11 +23,20 @@ function onSubmit(e) {
   page = 1;
 
   clearMarkup(refs.gallery);
-  getDataFromPixabay(name, page).then(makeMarkup).catch(console.log);
+  madeMarkup(name, page);
   refs.loadMoreBtn.removeAttribute('disabled');
 }
 
 function onLoadMore() {
   page += 1;
-  getDataFromPixabay(name, page).then(makeMarkup).catch(console.log);
+  madeMarkup(name, page);
+}
+
+async function madeMarkup(n, p) {
+  try {
+    const dataImage = await getDataFromPixabay(n, p);
+    await createMarkup(dataImage);
+  } catch (err) {
+    console.log(err);
+  }
 }

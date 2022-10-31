@@ -19,9 +19,7 @@ export default async function getImages(searchName, page) {
       Notify.failure(ERR_EMPTY_RESP);
       return;
     }
-    if (page === 1) {
-      Notify.success(`Hooray! We found ${response.data.totalHits} images.`);
-    }
+
     return {
       images: getCurrentImagesInfo(response.data.hits),
       totalHits: Number(response.data.totalHits),
