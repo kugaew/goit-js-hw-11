@@ -15,13 +15,13 @@ export default async function getImages(searchName, page) {
   try {
     const url = `${SOURCE}?key=${API_KEY}&q=${searchName}&image_type=${IMAGE_TYPE}&orientation=${ORIENTATION}&safesearch=${SAFESEARCH}&per_page=${PER_PAGE}&page=${page}`;
     const response = await axios.get(url);
-    if (response.data.totalHits == 0) {
-      throw new Error();
+    if (response.data.hits.length == 0) {
+      Notify.failure(ERR_EMPTY_RESP);
+      return;
     }
     if (page === 1) {
-      Notify.info(`Hooray! We found ${response.data.totalHits} images.`);
+      Notify.success(`Hooray! We found ${response.data.totalHits} images.`);
     }
-    /* return getCurrentImagesInfo(response.data.hits); */
     return {
       images: getCurrentImagesInfo(response.data.hits),
       totalHits: Number(response.data.totalHits),
@@ -29,7 +29,6 @@ export default async function getImages(searchName, page) {
       perPage: PER_PAGE,
     };
   } catch (err) {
-    Notify.failure(ERR_EMPTY_RESP);
     console.log(err);
   }
 }
