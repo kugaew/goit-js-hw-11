@@ -1,6 +1,7 @@
 import getDataFromPixabay from './js/axiosPixabay';
 import Refs from './js/refs';
 import { makeMarkup, clearMarkup } from './js/markup';
+import 'simplelightbox/dist/simple-lightbox.min.css';
 
 const refs = new Refs();
 refs.loadMoreBtn.setAttribute('disabled', 'true');

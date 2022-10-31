@@ -1,13 +1,25 @@
 import Refs from './refs';
 import markupImages from './templates/pfotoCards.hbs';
+import markupSimpleLightBox from './templates/simpleLb.hbs';
 import { Notify } from 'notiflix/build/notiflix-notify-aio';
+
+import simpleLightbox from 'simplelightbox';
 
 const refs = new Refs();
 
 export function makeMarkup(data) {
   const { images, totalHits, page, perPage } = data;
 
-  refs.gallery.insertAdjacentHTML('beforeend', markupImages(images));
+  /* refs.gallery.insertAdjacentHTML('beforeend', markupImages(images)); */
+  refs.gallery.insertAdjacentHTML('beforeend', markupSimpleLightBox(images));
+
+  let gallery = new simpleLightbox('.gallery a', {
+    captionPosition: 'bottom',
+    captionDelay: '250',
+    captionsData: 'alt',
+  });
+
+  gallery.on('show.simplelightbox', function () {});
 
   if (page > 1) {
     const { height: cardHeight } = document
@@ -15,7 +27,7 @@ export function makeMarkup(data) {
       .firstElementChild.getBoundingClientRect();
 
     window.scrollBy({
-      top: cardHeight * 1,
+      top: cardHeight * 3,
       behavior: 'smooth',
     });
   }
